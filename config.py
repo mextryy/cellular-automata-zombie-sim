@@ -1,30 +1,30 @@
 # config.py
 from enum import Enum
 
-# --- Stany Komórek ---
+# 
 class CellState(Enum):
-    # Stany dynamiczne (agenci)
-    GROUND = 0      # Neutralny stan, wolne pole
+    # Stany dynamiczne 
+    GROUND = 0      # wolne pole
     HUMAN = 1       # Człowiek
     INFECTED = 2    # Zarażony
     ZOMBIE = 3      # Zombie
-    DEAD = 4        # Martwy (Kompost)
+    DEAD = 4        # Martwy 
 
-    # Stany statyczne (teren)
+    # Stany statyczne 
     WATER = 11
     BUILDING = 12
     GREEN_AREA = 13
     STREET = 14
     HILL = 15
 
-# --- Parametry Symulacji ---
+# Parametry Symulacji 
 GRID_W = 50
 GRID_H = 50
-CELL_SIZE = 8 # Rozmiar komórki w GUI (dla Tkinter)
+CELL_SIZE = 8 # Rozmiar komórki w GUI 
 
 # Reguły czasowe
-INCUBATION_TIME = 5     # Kroki dla Infected -> Zombie
-COMPOST_TIME = 10       # Kroki dla Dead -> Ground
+INCUBATION_TIME = 5     # Kroki dla Infected - Zombie
+COMPOST_TIME = 10       # Kroki dla Dead - Ground
 
 # Reguły infekcji
 INFECTION_PROBABILITY = 0.5 
@@ -46,7 +46,7 @@ MOVEMENT_MODIFIERS = {
     CellState.HILL.value: 0.5      
 }
 
-# --- Kolory dla Wizualizacji ---
+#Kolory dla Wizualizacji 
 COLORS = {
     CellState.HUMAN: "#00AA00",     # Ciemna zieleń
     CellState.ZOMBIE: "#AA0000",    # Ciemna czerwień
