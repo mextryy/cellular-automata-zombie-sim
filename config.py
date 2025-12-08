@@ -1,6 +1,6 @@
 # config.py
 from enum import Enum
-
+MAPA_TERENU_PLIK = r"C:\Users\weron\Desktop\krakow.gif"
 # 
 class CellState(Enum):
     # Stany dynamiczne 
