@@ -12,6 +12,11 @@ class Cell:
         # Zmienne lokalne (dla agentów i specjalnych stanów)
         self.local_vars = {}
 
+def calculate_torus_dist_1d(val1, val2, size):
+    """Oblicza torusową odległość (minimum z bezpośredniej lub zawijanej)."""
+    diff = abs(val1 - val2)
+    return min(diff, size - diff)
+
 class Grid:
     """Reprezentuje całą mapę (siatkę Automatu Komórkowego)."""
     def __init__(self, width, height, initial_humans, initial_zombies, terrain_map=None):
@@ -53,29 +58,45 @@ class Grid:
 
 
     def get_neighbors(self, r, c):
-        """Zwraca listę obiektów Cell sąsiadujących z (r, c) (sąsiedztwo Moore'a - 8 pól)."""
         neighbors = []
         for dr in [-1, 0, 1]:
             for dc in [-1, 0, 1]:
                 if dr == 0 and dc == 0:
                     continue
-                nr, nc = r + dr, c + dc
+                    
+                nr = r + dr
+                nc = c + dc
                 
-                # Warunek na granice (całkowicie zamykamy mapę na krawędziach)
-                if 0 <= nr < self.height and 0 <= nc < self.width:
-                    neighbors.append(self.cells[nr][nc])
+                nr = nr % self.height
+                nc = nc % self.width
+                
+                neighbors.append(self.cells[nr][nc])
         return neighbors
 
     def find_nearest_agent(self, r, c, target_states):
-        """Znajduje najbliższego agenta o danym stanie (prosta heurystyka odległości Manhattan)."""
+        """Znajduje najbliższego agenta o danym stanie, używając torusowej odległości Manhattan."""
+        
+        # SEARCH_RANGE może pozostać, jeśli chcesz zoptymalizować prędkość.
+        # W przeciwnym razie usuń ograniczenie, aby szukać na całej mapie (bezpieczniej dla logiki, ale wolniej).
+        SEARCH_RANGE = 20 
+        
         min_dist = float('inf')
         nearest_coords = (r, c)
         
+        # Przy wyszukiwaniu torusowym, start/end pętli musi być ograniczony,
+        # lub po prostu przeszukujemy całą mapę, by nie komplikować pętli z modulo.
+        
+        # Wracamy do przeszukiwania całej mapy, aby mieć pewność, że znajdziemy cel.
         for tr in range(self.height):
             for tc in range(self.width):
                 if self.cells[tr][tc].state in target_states:
-                    # Odległość Manhattan
-                    dist = abs(r - tr) + abs(c - tc)
+                    
+                    # ⚠️ KLUCZOWA ZMIANA: Torusowa odległość Manhattan
+                    dist_r = calculate_torus_dist_1d(r, tr, self.height)
+                    dist_c = calculate_torus_dist_1d(c, tc, self.width)
+                    
+                    # Odległość Torusowa Manhattan
+                    dist = dist_r + dist_c
                     
                     if dist < min_dist:
                         min_dist = dist

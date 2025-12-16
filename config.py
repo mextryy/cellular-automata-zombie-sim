@@ -1,7 +1,10 @@
 # config.py
 from enum import Enum
-MAPA_TERENU_PLIK = r"C:\Users\weron\Desktop\krakow.gif"
-# 
+
+
+
+
+MAPA_TERENU_PLIK = "mapa.png" 
 class CellState(Enum):
     # Stany dynamiczne 
     GROUND = 0      # wolne pole
@@ -18,44 +21,45 @@ class CellState(Enum):
     HILL = 15
 
 # Parametry Symulacji 
-GRID_W = 50
-GRID_H = 50
-CELL_SIZE = 8 # Rozmiar komórki w GUI 
+GRID_W = 120
+GRID_H = 90
+CELL_SIZE = 7 # Rozmiar komórki w GUI 
 
 # Reguły czasowe
-INCUBATION_TIME = 5     # Kroki dla Infected - Zombie
-COMPOST_TIME = 10       # Kroki dla Dead - Ground
+INCUBATION_TIME = 2     # Kroki dla Infected - Zombie
+COMPOST_TIME = 5       # Kroki dla Dead - Ground
 
 # Reguły infekcji
-INFECTION_PROBABILITY = 0.5 
-ZOMBIE_INFECTION_RANGE = [1, 2] # Człowiek staje się zarażony przy 1 lub 2 sąsiadach Zombie
-ZOMBIE_DEATH_THRESHOLD = 3      # Człowiek umiera przy 3 lub więcej sąsiadach Zombie
+INFECTION_PROBABILITY = 0.6 
+ZOMBIE_INFECTION_RANGE = [1] # Człowiek staje się zarażony przy 1 sąsiadach Zombie
+ZOMBIE_DEATH_THRESHOLD = 2      # Człowiek umiera przy 2 lub więcej sąsiadach Zombie
 
 # Reguły ruchu
-BASE_HUMAN_SPEED = 1 
+BASE_HUMAN_SPEED = 1
 BASE_ZOMBIE_SPEED = 1 
-WIND_VECTOR = (0, 0) # Brak wiatru (r, c)
+WIND_VECTOR = (0, 0) 
 WIND_STRENGTH = 0.0
+NOISE_STRENGTH = 0.3
 
 MOVEMENT_MODIFIERS = {
     CellState.GROUND.value: 1.0, 
     CellState.WATER.value: 0.1,    
-    CellState.BUILDING.value: 0.2, 
-    CellState.GREEN_AREA.value: 0.8, 
-    CellState.STREET.value: 1.5,   
+    CellState.BUILDING.value: 0.5, 
+    CellState.GREEN_AREA.value: 1.2, 
+    CellState.STREET.value: 2.0,   
     CellState.HILL.value: 0.5      
 }
 
 #Kolory dla Wizualizacji 
 COLORS = {
-    CellState.HUMAN: "#00AA00",     # Ciemna zieleń
-    CellState.ZOMBIE: "#AA0000",    # Ciemna czerwień
-    CellState.INFECTED: "#FFA500",  # Pomarańczowy
-    CellState.DEAD: "#404040",      # Ciemny szary (Martwy)
-    CellState.GROUND: "#734F20",    # Brązowy (Ziemia)
-    CellState.WATER: "#0000FF",     # Niebieski
-    CellState.BUILDING: "#909090",  # Jasny szary (Budynek)
-    CellState.GREEN_AREA: "#00FF00",# Jasna zieleń (Teren zielony)
-    CellState.STREET: "#101010",    # Czarny (Ulica)
-    CellState.HILL: "#663300"       # Kasztanowy (Wzniesienie)
+    CellState.HUMAN: "#F71294",    
+    CellState.ZOMBIE: "#AA0000",    
+    CellState.INFECTED: "#FFA500",  
+    CellState.DEAD:  "#F8EC45",      
+    CellState.GROUND: "#734F20",    
+    CellState.WATER: "#0000FF",     
+    CellState.BUILDING: "#909090", 
+    CellState.GREEN_AREA: "#00FF00",
+    CellState.STREET: "#101010",    
+    CellState.HILL: "#842626"
 }

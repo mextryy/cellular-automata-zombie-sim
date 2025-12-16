@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 from config import CellState
 
+
 def load_map_from_image(image_path, target_width, target_height):
     """
     Wczytuje mapę z obrazu i konwertuje kolory na typy terenu.
